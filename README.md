@@ -22,7 +22,10 @@ To contribute to the project,
 + HTML
 + CSS
 + JavaScript
-+ Python Flask
++ Python
+    + flask
+    + flask-sqlalchemy
+    + flask-wtf
 
 ## Notes
 Star the project to view latest changes
