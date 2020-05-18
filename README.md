@@ -11,6 +11,12 @@ To contribute to the project,
 + The code is reviewed :+1::-1:
 + The code is merged :grinning:
 
+### Sidebar for virtual environment
+To activate the ```virtual environment``` for linux
+```bash
+  $ source venv/bin/activate
+```
+
 ## Features
 ### Basic
 + Create user account and user authentication
@@ -24,11 +30,13 @@ To contribute to the project,
 + JavaScript
 + Python
     + flask
-    + flask-sqlalchemy
+    + flask-login
     + flask-wtf
+    + peewee
+    + arrow
 
 ## Notes
 Star the project to view latest changes
 made with :heart:
 
-@KOFIDARKOH @Daniel-Osei
+@KOFIDARKO @Daniel-Osei
