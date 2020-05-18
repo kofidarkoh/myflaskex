@@ -31,4 +31,4 @@ To contribute to the project,
 Star the project to view latest changes
 made with :heart:
 
-@kofidarkoh @Daniel-Osei
+@KOFIDARKOH @Daniel-Osei
