@@ -12,11 +12,16 @@ To contribute to the project,
 + The code is merged :grinning:
 
 ### Sidebar for virtual environment
+
 To activate the ```virtual environment``` for linux
 ```bash
   $ source venv/bin/activate
 ```
 
+deactivate the ```virtual environment``` for all OS
+```bash
+  $ deactivate
+```
 ## Features
 ### Basic
 + Create user account and user authentication
