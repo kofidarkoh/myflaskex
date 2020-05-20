@@ -1,6 +1,6 @@
 from . import site
-
+from flask import render_template
 
 @site.route('/')
 def index():
-    return "hello friend"
+    return render_template('index.html')

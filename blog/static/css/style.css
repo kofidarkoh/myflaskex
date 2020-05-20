@@ -1,0 +1,18 @@
+body {
+    background-color: red;
+}
+
+main {
+    background-color: yellow;
+}
+
+#blog-content {
+    background-color: blue;
+}
+.row {
+    background-color: green;
+}
+
+.col-md-6 {
+    background-color: pink;
+}
