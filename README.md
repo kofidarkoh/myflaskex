@@ -28,6 +28,7 @@ deactivate the ```virtual environment``` for all OS
 + Login / Logout
 + Update profile
 + View blog posts
++ Like and Comment blog posts
 
 ## Technologies
 + HTML
@@ -44,4 +45,4 @@ deactivate the ```virtual environment``` for all OS
 Star the project to view latest changes
 made with :heart:
 
-@KOFIDARKO @Daniel-Osei
+@kofidarkoh @Daniel-Osei
