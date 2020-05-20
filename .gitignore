@@ -1,2 +1,3 @@
 *.pyc
+blog/__pycache__/
 blog/site/__pycache__/
