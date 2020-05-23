@@ -1,0 +1,30 @@
+{% extends 'includes/base.html' %}
+
+
+{% block body %}
+
+<div class="signupform justify-content-center">
+    <!-- usericon -->
+    <i class="fa fa-user" aria-hidden="true"></i>
+    <h1>Welcome</h1>
+    <form action="">
+        <input type="email" class="inputbox" placeholder="Email">
+        <input type="password" class="inputbox" placeholder="pass">
+
+        <div>
+            <span><input type="checkbox" class="checkbox"> Remember me</span>    
+        </div>
+        
+        <div>
+            <button type="button" class="signupbtn">Login</button>
+        </div>
+        
+        <hr>
+        <p class="or">OR</p>
+        <!-- <button type="button" class="twitterbtn">something else up</button> -->
+        <p>Don't have an account? <a href="#">Sign up</a> </p>
+        <p>Forgot your password? <a href="#">Reset Password</a></p>
+    </form>
+</div>
+
+{% endblock %}

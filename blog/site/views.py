@@ -6,3 +6,7 @@ from playhouse.flask_utils import get_object_or_404,object_list
 @site.route('/')
 def index():
     return render_template('index.html')
+
+@site.route('/form')
+def register():
+    return render_template('form.html')

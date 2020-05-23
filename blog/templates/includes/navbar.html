@@ -6,7 +6,7 @@
     <nav>
         <ul class="nav justify-content-center grey lighten-4 py-4">
             <li class="nav-item">
-                <!-- jinja function to nevigate endpoint of url url_for() -->
+                <!-- jinja function to navigate endpoint of url url_for() -->
                 <a class="nav-link active" href="{{ url_for('site.index') }}">Blog</a>
             </li>
             <li class="nav-item">
@@ -15,6 +15,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="#!">Documentation</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('site.register') }}">Login/Register</a>
+            </li>
+                
         </ul>
+
+        
+            
     </nav>
+
+    
 </header>
