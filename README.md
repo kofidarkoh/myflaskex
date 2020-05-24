@@ -50,4 +50,11 @@ deactivate the ```virtual environment``` for all OS
 Star the project to view latest changes
 made with :heart:
 
+Always remember to:
+
+```git
+  $ git pull 
+```
+before you start
+
 @kofidarkoh @Daniel-Osei
