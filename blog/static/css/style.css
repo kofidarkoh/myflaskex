@@ -1,0 +1,87 @@
+body {
+    background-color: red;
+}
+
+main {
+    background-color: yellow;
+}
+
+#blog-content {
+    background-color: blue;
+}
+.row {
+    background-color: green;
+}
+
+.col-md-6 {
+    background-color: pink;
+}
+
+
+/* forms */
+
+.signupform {
+    width: 400px;
+    box-shadow: 0 0 3px 0 rgba(0,0,0.3);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 8% auto 0;
+    text-align: center;
+}
+
+.signupform h1{
+    color: red;
+    margin-bottom: 30px;
+}
+
+.inputbox {
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #999;
+    outline: none;
+}
+
+button {
+    color: red;
+    width: 40%;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 15px;
+    margin: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.signupbtn {
+    background-color: #1c8adb;
+}
+
+hr {
+    width: 80%;
+    margin-top: 20px;
+}
+
+.or {
+    background: #fff;
+    width: 30px;
+    margin: -28px auto 11px;
+}
+
+.img {
+    width: 70px;
+    margin-top: -50px;
+}
+
+.checkbox,.fpass {
+	margin: 30px 10px 30px 0;
+}
+
+
+/* nav */
+.side {
+	padding-left: 150px ;
+	float: right;
+}
