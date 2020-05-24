@@ -20,7 +20,7 @@ To activate the ```virtual environment``` in linux
 
 To activate the ```virtual environment``` in windows
 ```shell
-  >> \env\Scripts\activate.bat 
+  >> \venv\Scripts\activate.bat 
 ```
 
 deactivate the ```virtual environment``` for all OS
