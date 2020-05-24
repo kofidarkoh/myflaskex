@@ -20,7 +20,7 @@ To activate the ```virtual environment``` in linux
 
 To activate the ```virtual environment``` in windows
 ```shell
-  C: path\to\project\venv\Scripts\activate 
+  C:\> path\to\project\venv\Scripts\activate 
 ```
 
 deactivate the ```virtual environment``` for all OS
