@@ -13,9 +13,14 @@ To contribute to the project,
 
 ### Sidebar for virtual environment
 
-To activate the ```virtual environment``` for linux
+To activate the ```virtual environment``` in linux
 ```bash
   $ source venv/bin/activate
+```
+
+To activate the ```virtual environment``` in windows
+```shell
+  >> \env\Scripts\activate.bat 
 ```
 
 deactivate the ```virtual environment``` for all OS
