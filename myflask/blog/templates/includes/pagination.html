@@ -1,0 +1,11 @@
+<nav aria-label="Page navigation example mb-5">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">{% if page > 1 %}
+            <a href="?page={{ page - 1 }}" class="btn  btn-secondary">Previous</a>
+            {% endif %}</li>
+        <li class="page-item">
+            {% if page < pagination.get_page_count() %} <a href="?page={{ page + 1 }}" class="btn btn-secondary">Next</a>
+                {% endif %}
+        </li>
+    </ul>
+</nav>

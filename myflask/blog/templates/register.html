@@ -1,0 +1,144 @@
+{% extends 'includes/layout.html' %}
+{% block content %}
+<title>{{ title }}</title>
+<div class="card" style="margin: auto;width: 70%;">
+    <div class="shadow container pb-4 pt-4 pl-4 pr-4">
+        <form class="form-group container" action="{{ url_for('site.register') }}" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-row">
+                <div class="mb-3 col-6">
+                    {{ form.name.label() }}
+                    {% if form.name.errors %}
+                    {{ form.name(class='form-control is-invalid') }}
+                    <div class="invalid-tooltip">
+                        {% for error in form.name.errors %}
+                             <span class="mb-2"> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {% elif form.name.data %}
+
+                        {{ form.name(class='form-control is-valid') }}
+
+                    {%else%}
+
+                    {{ form.name(class='form-control') }}
+
+                    {% endif %}
+                </div>
+                <div class="mb-3 col-6">
+                    {{ form.email.label() }}
+                    {% if form.email.errors %}
+                    {{ form.email(class='form-control is-invalid') }}
+                    <div class="invalid-tooltip">
+                        {% for error in form.email.errors %}
+                             <span class="mb-2"> {{ error }}</span>
+                        {% endfor %}
+                        </div>
+                    {% elif form.email.data %}
+
+                        {{ form.email(class='form-control is-valid') }}
+
+                    {% else %}
+
+                    {{ form.email(class='form-control') }}
+
+                    {% endif %}
+                </div>
+                <div class="mb-3  col-6">
+                    {{ form.username.label() }}
+
+                    {% if form.username.errors %}
+
+                    {{ form.username(class='form-control is-invalid') }}
+
+                    <div class="invalid-tooltip">
+
+                        {% for error in form.username.errors %}
+
+                             <span class="mb-2"> {{ error }}</span>
+
+                        {% endfor %}
+
+                        </div>
+                    {% elif form.username.data %}
+                    
+                        {{ form.username(class='form-control is-valid') }}
+
+                    {% else %}
+
+                    {{ form.username(class='form-control') }}
+
+                    {% endif %}
+                </div>
+                <div class="mb-3  col-6">
+                    {{ form.password.label() }}
+
+                    {% if form.password.errors %}
+
+                    {{ form.password(class='form-control is-invalid') }}
+
+                    <div class="invalid-tooltip">
+
+                        {% for error in form.password.errors %}
+
+                             <span class="mb-2"> {{ error }}</span>
+
+                        {% endfor %}
+
+                        </div>
+                    {% else %}
+
+                    {{ form.password(class='form-control') }}
+
+                    {% endif %}
+                </div>
+                <div class="mb-3 col-6">
+                    <label>Location</label>
+                    <select class="form-control" name="location">
+                        <option>N/A</option>
+                        <option>Ghana</option>
+                        <option>United State</option>
+                        <option>United kingdom</option>
+                        <option>China</option>
+                        <option>India</option>
+                        <option>Nageria</option>
+                        <option>Brazil</option>
+                    </select>
+                </div>
+                <div class="mb-3 col-6">
+                    {{ form.confirm_password.label() }}
+
+                    {% if form.confirm_password.errors %}
+
+                    {{ form.confirm_password(class='form-control is-invalid') }}
+
+                    <div class="invalid-tooltip">
+
+                        {% for error in form.confirm_password.errors %}
+
+                             <span class="mb-2"> {{ error }}</span>
+
+                        {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                    {{ form.confirm_password(class='form-control') }}
+
+                    {% endif %}
+
+                </div>
+                <div style="margin: auto;width: 15%;">
+                    {{ form.submit(class='btn btn-lg btn-primary') }}
+                </div>
+                
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <small>Have an account already?<a href="{{ url_for('site.login') }}" class="btn btn-link">Login</a></small>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"moduleResolution": "node",
+
+		"removeComments": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noImplicitThis": true,
+
+		"forceConsistentCasingInFileNames": true,
+
+		"sourceMap": true,
+
+		"importHelpers": true,
+
+		"lib": ["es5", "esnext", "dom", "scripthost"]
+	},
+
+	"exclude": ["node_modules", "build"]
+}
