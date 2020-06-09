@@ -1,0 +1,52 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title>Login</title>
+<div class="card mt-4" style="margin: auto;width: 50%">
+    <div class=" ">
+        <div class="form-group " style="margin: auto;width: 50%">
+            <!-- usericon -->
+            <div style="margin: auto;width: 10%">
+                <i class="fa mt-4  mb-4 fa-user fa-4x" aria-hidden="true"></i>
+            </div>
+            <form action="{{ url_for('auth.login') }}" class="form-group" method="POST">
+                {{ form.hidden_tag() }}
+                <div class=" mt-2 mb-2">
+                    {{ form.username.label(class="") }}
+                    {% if form.username.errors %}
+                    {{ form.username(class="form-control rounded-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                        <span class="mr-2">{{ error }} </span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.username(class="form-control rounded-lg")}}
+                    {% endif %}
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    {{ form.password.label(class="") }}
+                    {% if form.password.errors %}
+                    {{ form.password(class="form-control rounded-lg has-error")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.password(class="form-control rounded-lg")}}
+                    {% endif %}
+                </div>
+                <div class="mt-2">
+                    <div class=" mb-2">
+                            {{ form.rememberme.label(class="") }}
+                            {{ form.rememberme(class="")}}
+                    </div>
+                    {{ form.submit(class="btn btn-primary")}}
+                </div>
+                <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a> </p>
+                <p>Forgot your password? <a href="#">Reset Password</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

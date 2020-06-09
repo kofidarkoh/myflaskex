@@ -1,0 +1,68 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title> Home | {{ current_user.name }}</title>
+<div class="container">
+    <div class="">
+        <div class="container">
+            <div class=" mt-3">
+                <div class="media" style="margin: auto;width: 50%">
+                    <div class="media-left">
+                        
+                    </div>
+                    <div class="media-body">
+                        <div class="form-group ">
+                            <form action="{{ url_for('site.new_post') }}" class="form-group" method="POST">
+                                {{ form.hidden_tag() }}
+                                <div class=" mt-2 mb-2">
+                                    {{ form.post_content(class="form-control")}}
+                                </div>
+                                <div class="mt-2">
+                                    {{ form.submit(class="btn btn-block btn-primary")}}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    {% for post in post %}
+                    <div class="col-xs-2 col-md-3">
+                        <div class="thumbnail mt-3" style="width: 250px;">
+                            <img src="{{ url_for('static',filename= 'photos/'+ post.user.username +'/' +post.user.photo) }}" class="img-thumbnail" alt="..." style="width: 120px">
+                            <h4 class="text-center mt-3"><a href="">{{ post.user.name }}</a></h4>
+                            <div class="text-center">
+                                {% if post.likes == '0'%}
+                                <span class="badge badge-primary"> {{ post.likes }} like</span>
+                            {% endif %}
+                            {% if post.likes == '1'%}
+                                <span class="badge badge-primary"> {{ post.likes }} like</span>
+                            {% endif %}
+                            {% if post.likes > '1'%}
+                                <span class="badge badge-primary"> {{ post.likes }} likes</span>
+                            {% endif %}
+                        </div>
+                            <p class="text-muted text-center">{{ post.dtime(post.date) }}</p>
+                            <div class="">
+                                <article style="" class="text-center">
+                                    {{ post.content | safe | truncate(50) }}</article>
+                                <div class="btn-group" style="margin-left:40px ;margin-right: 40px">
+                                    {% if post.is_post_liked(post.id, current_user.id) %}
+                                        <a href="{{ url_for('site.unlike_post', pid = post.id) }}" class="btn mt-2 btn-danger ml-3" role="button"><i class="fa fa-thumbs-down"></i></a>
+                                    {% endif%}
+                                    {% if not post.is_post_liked(post.id, current_user.id) %}
+                                        <a href="{{ url_for('site.like_post', pid = post.id ) }}" class="btn mt-2 btn-primary ml-3" role="button"><i class="fa fa-thumbs-up"></i></a>
+                                    {% endif%}
+                                    <a href="{{ url_for('site.view_post', pid = post.id) }}" class="btn mt-2 btn-default ml-3" role="button"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ url_for('site.view_post', pid = post.id) }}" class="btn mt-2 btn-primary ml-3" role="button"><i class="fa fa-share-square"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

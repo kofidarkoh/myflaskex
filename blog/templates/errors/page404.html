@@ -1,0 +1,12 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title> Account | {{ current_user.name }}</title>
+<div class="container" style="margin: auto;width: 80%">
+	<div class="jumbotron">
+  <h1 class="display-4">Page Not Found</h1>
+  <p class="lead">
+  	{{ request.url }}
+  </p>
+</div>
+</div>
+{% endblock %}

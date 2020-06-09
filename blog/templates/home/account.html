@@ -1,0 +1,82 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title> Account | {{ current_user.name }}</title>
+<div class="container">
+    <div class="media">
+        <div class="media-left media-middle">
+            <a href="#">
+                <img class="media-object img-rounded" src="{{ url_for('static',filename= 'photos/'+ current_user.username +'/' + current_user.photo) }}" alt="..." height="230" width="230">
+            </a>
+        </div>
+        <div class="media-body">
+            <h3 class="mt-0  ml-5">Name:{{ current_user.name }}</h3>
+            <h3 class="mt-1  ml-5">Email: {{ current_user.email }}</h3>
+            <h3 class="mt-1  ml-5">UserName: {{ current_user.username }}</h3>
+            <h3 class="mt-1  ml-5">Joined: {{ current_user.dtime() }}</h3>
+        </div>
+    </div>
+    <div class=" mt-4">
+        <div class="container " style="margin: auto;width: 60%">
+            <h3 class="mt-2">Change account information</h3>
+            <div class="">
+                <form action="{{ url_for('site.account', username = current_user.username) }}" class="form-group mt-5 " method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="">
+                        {{ form.name.label(class="") }}
+                        {% if form.name.errors %}
+                        <div class="has-error">
+                            {{ form.name(class="form-control")}} {% for error in form.name.errors %}
+                            <span class="mr-2 help-block text-error">{{ error }} </span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.name(class="form-control ")}}
+                        {% endif %}
+                    </div>
+                    <div class=" mb-2">
+                        {{ form.email.label(class="") }}
+                        {% if form.email.errors %}
+                        <div class="has-error">
+                            {{ form.email(class="form-control ")}} {% for error in form.email.errors %}
+                            <span class="mr-2 help-block text-error">{{ error }} </span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.email(class="form-control")}}
+                        {% endif %}
+                    </div>
+                    <div class="custom-file mb-2">
+                        {{ form.photo.label(class="custom-file-label") }}
+                        {% if form.photo.errors %}
+                        <div class="has-error">
+                            {{ form.photo(class="custom-file-input")}}
+                            {% for error in form.photo.errors %}
+                            <span class="mr-2 help-block text-error">{{ error }} </span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.photo(class="custom-file-input")}}
+                        {% endif %}
+                    </div>
+                    <div class="mb-2">
+                        {{ form.username.label(class="") }}
+                        {% if form.username.errors %}
+                        <div class="has-error">
+                            {{ form.username(class="form-control")}} {% for error in form.username.errors %}
+                            <span class="mr-2 help-block text-error">{{ error }} </span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.username(class="form-control")}}
+                        {% endif %}
+                    </div>
+                    <div class="mt-3 mb-0">
+                        {{ form.submit(class="btn btn-primary")}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
