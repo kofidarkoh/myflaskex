@@ -55,6 +55,15 @@ Always remember to:
 ```git
   $ git pull 
 ```
+## Test users
+ username
++ kofidarkoh
++ georgeamoh
++ koficrypto
++ georgekofidarkoh
+
+password : george
+
 before you start
 
 @kofidarkoh @Daniel-Osei
