@@ -1,5 +1,5 @@
 from flask_login import login_user, login_required, logout_user, current_user
-from playhouse.flask_utils import get_object_or_404,object_list
+from playhouse.flask_utils import get_object_or_404, object_list
 from flask import url_for,redirect,render_template,request
 from .authForms import LoginForm,RegisterForms, PostForm
 from blog.models import User
