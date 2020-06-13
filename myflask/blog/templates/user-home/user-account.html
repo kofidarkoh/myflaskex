@@ -1,0 +1,26 @@
+{% extends 'includes/layout.html' %}
+{% block content %}
+<title> {{ title }} </title>
+<div class="container">
+    <div class="">
+        <div class="media mt-4 ml-4 mr-4">
+            <img src="{{ image }}" class="align-self-start mr-3 rounded-lg mb-3" alt="{{ user.picture }}" height="150"
+                width="150">
+            <div class="media-body">
+                <h4 class="mt-0">Name: {{ user.name }}</h4>
+                <h4 class="mt-0">Email: {{ user.email }}</h4>
+                <h4 class="mt-0">Username: {{ user.username }}</h4>
+                <h4 class="mt-0">Location: {{ user.location }}</h4>
+                <h4 class="mt-0">KCrypto ID: {{ user.kcrypto_id }}</h4>
+                {% if current_user.id == user.id %}
+                
+                {% else %}
+                
+                <p class="mt-0">Last seen {{ current_user.user_lastseen(user.id) }}</p>
+           
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

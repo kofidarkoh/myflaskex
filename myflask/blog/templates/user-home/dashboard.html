@@ -1,0 +1,26 @@
+{% extends 'includes/layout.html' %}
+{% block content %}
+<title>Dashboard</title>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    {% for art in article  %}
+    <tbody>
+        <tr>
+            <td>{{ art.id | safe}}</td>
+            <td><a href="{{ url_for('site.read_article', id = art.id) }}">{{ art.title | safe }}</a></td>
+            <td>{{ art.date_posted.strftime("%d %B, %Y") }}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

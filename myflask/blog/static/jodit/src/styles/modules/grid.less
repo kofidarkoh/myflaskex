@@ -1,0 +1,28 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../variables';
+@import (reference) '../mixins';
+
+.jodit_grid {
+	display: flex;
+	width: 100%;
+
+	[class*='jodit_col-'] {
+		flex: 1 1 auto;
+	}
+
+	.jodit_col-lg {
+		.loop(@counter: 5, @max: 5) when (@counter > 0) {
+			&-@{counter}-@{max} {
+				width: (100% / @max) * @counter;
+			}
+			.loop((@counter - 1), @max);
+		}
+		.loop(5, 5);
+		.loop(4, 4);
+	}
+}
