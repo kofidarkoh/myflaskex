@@ -1,6 +1,5 @@
 from hashlib import sha256,md5,sha1
 from random import random
-
 meth = ["POST",'GET']
 
 class Relationship_status:

@@ -69,7 +69,7 @@
                     {{ form.submit(class="btn btn-primary")}}
                 </div>
                 <!-- <button type="button" class="twitterbtn">something else up</button> -->
-                <p class="text-center mt-3">Already have an account? <a href="#">Sign up</a> </p>
+                <p class="text-center mt-3">Already have an account? <a href="{{ url_for('auth.login')}}">login</a> </p>
             </form>
             </div>
         </div>

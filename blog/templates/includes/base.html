@@ -10,7 +10,7 @@
     <!-- font awesome -->
     <link rel="stylesheet" href="{{ url_for('static', filename='fonts/font-awesome/css/all.css') }}">
     <!-- Bootstrap core CSS -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/1bootstrap.min.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/yseditor.min.css') }}">
     <!-- MDBootstap CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
@@ -31,11 +31,17 @@
     <!-- JavasScript for Bootstrap support jQuert, then popper, then bootstrap-->
     <script src="{{ url_for('static', filename='js/jquery-slim.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='jodit/build/jodit.es2018.min.css') }}">
-    <script src="{{ url_for('static', filename='jodit/build/jodit.es2018.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/uikit.min.js') }}" async defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='jodit/build/jodit.min.css') }}">
+    <script src="{{ url_for('static', filename='jodit/build/jodit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/yseditor.min.js') }}" async defer></script>
     <script type="text/javascript">
     const ed = new Jodit('#post_content');
+    </script>
+    <script type="text/javascript">
+       const edit = new Jodit('#comment_content'); 
+    </script>
+        <script type="text/javascript">
+         const eit = new Jodit('#comment_content_update');
     </script>
 </body>
 

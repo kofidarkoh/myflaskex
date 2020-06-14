@@ -34,6 +34,18 @@ class PostForm(FlaskForm):
 	post_content = TextAreaField(validators=[InputRequired()])
 	submit = SubmitField('Post')
 
+class UpdatePostForm(FlaskForm):
+	post_content = TextAreaField(validators=[InputRequired()])
+	submit = SubmitField('update')
+
+class CommentForm(FlaskForm):
+	comment_content = TextAreaField(validators=[InputRequired()])
+	submit = SubmitField('comment')
+
+class CommentFormUpdate(FlaskForm):
+	comment_content_update = TextAreaField(validators=[InputRequired()])
+	submit = SubmitField('update')
+
 
 class UpdateAccountInfo(FlaskForm):
 	name = StringField('Name', validators=[InputRequired()])

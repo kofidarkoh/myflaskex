@@ -1,13 +1,13 @@
 from flask_login import login_user, login_required, logout_user, current_user
-from playhouse.flask_utils import get_object_or_404, object_list
+from playhouse.flask_utils import get_object_or_404,object_list
 from flask import url_for,redirect,render_template,request
 from .authForms import LoginForm,RegisterForms, PostForm
 from blog.models import User
 from werkzeug.security import safe_join
 import os
-from .utils import GenHashPassword,CheckPassword
+from .utils import GenHashPassword,CheckPassword, GenHexDigest
 from flask import Blueprint, current_app,flash
-
+import random
 
 auth = Blueprint('auth', __name__)
 
@@ -30,9 +30,10 @@ def login():
 def register():
 	form = RegisterForms()
 	if form.validate_on_submit():
-		data = User.insert(name= form.name.data,username = form.username.data, email = form.email.data,password = GenHashPassword(form.password.data))
+		user_path_hash = GenHexDigest(len(form.username.data), random.random())
+		user_path = os.path.join(current_app.root_path + '/static/photos/'+ user_path_hash)
+		data = User.insert(name= form.name.data,username = form.username.data, email = form.email.data,password = GenHashPassword(form.password.data), photo = user_path_hash)
 		data.execute()
-		user_path = os.path.join(current_app.root_path + '/static/photos/'+form.username.data)
 		os.mkdir(user_path)
 		flash('You are now registered','success')
 		return redirect(url_for('.login'))

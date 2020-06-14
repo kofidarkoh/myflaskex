@@ -1,0 +1,16 @@
+{% if pagination %}
+{% if page > 1%}
+<nav>
+    <ul class="pager">
+        <li class="previous"><a href="?page={{ page - 1 }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+    </ul>
+</nav>
+{% endif %}
+{% if page < pagination.get_page_count() %}
+<nav>
+    <ul class="pager">
+        <li class="next"><a href="?page={{ page + 1 }}"><span aria-hidden="true">&larr;</span> Next</a></li>
+    </ul>
+</nav>
+{% endif %}
+{% endif %}

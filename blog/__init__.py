@@ -1,6 +1,7 @@
 from flask import Flask,g
 from .auth.views import auth as auth_bp
 import os
+import arrow
 from .errors.views import error as er
 from .site.views import site as site_bp
 from .models import db,login_manager,relationship
@@ -29,3 +30,11 @@ def urlencode_filter(s):
     s = quote_plus(s)
     return Markup(s)
 
+@app.template_filter('count_pending_request')
+def count_pending_request_filter(userid):
+	return relationship.pending_relationship_request(userid).count()
+
+@app.template_filter('dtime')
+def dtime_filter(date):
+	utc = arrow.get(date)
+	return utc.humanize()

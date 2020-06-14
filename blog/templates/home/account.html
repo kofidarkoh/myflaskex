@@ -5,7 +5,13 @@
     <div class="media">
         <div class="media-left media-middle">
             <a href="#">
-                <img class="media-object img-rounded" src="{{ url_for('static',filename= 'photos/'+ current_user.username +'/' + current_user.photo) }}" alt="..." height="230" width="230">
+                {% if not current_user.photo.endswith('.jpg') %}
+
+                <img class="media-object img-rounded" src="{{ url_for('static',filename= 'photos/photo.jpg') }}" alt="..." height="230" width="230">
+                {% else %}
+
+                <img class="media-object img-rounded" src="{{ url_for('static',filename= 'photos/'+ current_user.photo) }}" alt="..." height="230" width="230">
+                {% endif %}
             </a>
         </div>
         <div class="media-body">

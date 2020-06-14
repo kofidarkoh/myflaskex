@@ -1,4 +1,4 @@
-from peewee import CharField, DateTimeField, Model,SqliteDatabase,ForeignKeyField,TextField,IntegerField,DoesNotExist, MySQLDatabase,fn
+from peewee import *
 from flask_login import UserMixin,LoginManager, current_user
 from playhouse.sqliteq import SqliteQueueDatabase # peewee extra lib playhouse
 import arrow # time and date 
@@ -13,9 +13,16 @@ login_manager = LoginManager()
 db_path = os.path.join(os.path.dirname(__file__) + '/auth/database/blogDB.db')
 
 # peeweee sqlite database config
-# db = SqliteDatabase(db_path, pragmas = {'foreign_keys' : 1,'cache_size': 1024,'journal_mode': 'wal'})
-db = MySQLDatabase(database='mydb',user = 'admin',password='cybertron')
+db = SqliteDatabase(db_path, pragmas = {'foreign_keys' : 1,'cache_size': 1024,'journal_mode': 'wal'})
+# db = MySQLDatabase(database='mydb',user = 'admin',password='cybertron')
 # all table base 
+
+
+@login_manager.user_loader
+def load_user(user_id):
+	return User.get_by_id(user_id)
+
+
 class BaseModel(Model):
     
     class Meta:
@@ -28,8 +35,9 @@ class User(BaseModel,UserMixin):
 	username = CharField(unique = True)
 	password = CharField()
 	lastseen = CharField(default=dtime.now())
+	dphoto = CharField(default='photo.jpg')
 	photo = CharField(default='photo.jpg')
-	joined = DateTimeField(default=dtime.now())
+	joined = DateTimeField(default=dtime.now)
 
 	
 	def dtime(self):
@@ -39,9 +47,12 @@ class User(BaseModel,UserMixin):
 	def count_user_post(self):
 		return Post.user_post().count()
 
+	def accept_relationship(self,fromuser):
+		return relationship.update(status = rstatus.accept).where((relationship.to_user == self) & (relationship.from_user == fromuser) & (relationship.status == rstatus.pending)).execute()
+
 class Post(BaseModel):
 	content = TextField()
-	date = DateTimeField(default = dtime.now())
+	date = DateTimeField(default = dtime.now)
 	user = ForeignKeyField(User, backref='user_post', on_delete='cascade', on_update='cascade')
 	likes = CharField(default= 0)
 
@@ -53,13 +64,27 @@ class Post(BaseModel):
 		return utc.humanize()
 
 	@classmethod
+	def user_posts(cls):
+		# .where(Post.user == current_user.id)
+		user = Post.select(Post,relationship).join(relationship, on=(relationship.from_user == current_user.id )).where(relationship.status == rstatus.accept)
+
+		ruser = Post.select(Post,relationship).join(relationship, on=(relationship.to_user == current_user.id)).where(relationship.status == rstatus.accept)
+		result = user  | ruser.order_by(Post.date.desc())
+		print(result)
+		if result:
+			return result
+		return Post.select().where(Post.user == current_user.id)
+
+
+	@classmethod
 	def user_post(cls):
 		# .where(Post.user == current_user.id)
-		return Post.select().order_by(Post.date.desc())
+		 return Post.select(Post,relationship).join(relationship, on=relationship.from_user == Post.user).where((relationship.status == rstatus.accept))
 
 	@classmethod
 	def delete_post(cls,pid):
 		if Post.select().where(Post.id == pid):
+			Comment.delete().where(Comment.post == pid).execute()
 			return Post.delete().where(Post.id == pid).execute()
 	@classmethod
 	def is_post_liked(self,pid,user):
@@ -90,33 +115,52 @@ class LikePost(BaseModel):
 class Comment(BaseModel):
 	content = TextField()
 	post = ForeignKeyField(Post, backref='post_comment', on_delete='cascade', on_update='cascade')
-	date = DateTimeField(default = dtime.now())
+	date = DateTimeField(default = dtime.now)
 	user = ForeignKeyField(User, backref='comment_user', on_delete='cascade', on_update='cascade')
 	likes = CharField(default= 0)
+
+	@classmethod
+	def create_comment(cls,comment_content,user,post):
+		return cls.insert(content = comment_content,user = user,post = post).execute()
+
+	@classmethod
+	def get_post_comments(cls,pid):
+		res =  cls.select().where(cls.post == pid)
+		return res
+
+	@classmethod
+	def update_comment(cls,comment_content,post, user):
+		return cls.update(content = comment_content ).where((cls.post == post) & (cls.user == user)).execute()
+
+	@classmethod
+	def delete_comment(cls,cid,pid):
+		com = cls.get(cls.id == cid)
+		return cls.delete().where((cls.date == com.date) & (cls.post== pid)).execute()
 
 class relationship(BaseModel):
 	from_user = ForeignKeyField(User, backref='rel_user', on_delete='cascade', on_update='cascade')
 	to_user = ForeignKeyField(User, backref='rel_user', on_delete='cascade', on_update='cascade')
 	status = IntegerField(default = rstatus.pending)
 	action_user = ForeignKeyField(User, backref='rel_user', on_delete='cascade', on_update='cascade')
-	date = DateTimeField(default=dtime.now())
+	date = DateTimeField(default=dtime.now)
 
 	@classmethod
-	def is_to_follow_pending(cls,to_user,from_user):
+	def is_to_relationship_pending(cls,to_user,from_user):
 		return (cls.select().where((cls.to_user == to_user) & (cls.from_user == from_user)  & (cls.status == rstatus.pending)))
 
 	@classmethod
-	def is_from_follow_pending(cls,to_user,from_user):
+	def is_from_relationship_pending(cls,to_user,from_user):
 		return (cls.select().where((cls.to_user == to_user) & (cls.from_user == from_user)  & (cls.status == rstatus.pending)))
 
 	@classmethod
-	def pending_followers(cls,to_user):
+	def pending_relationship_request(cls,to_user):
 		return (cls.select().where((cls.to_user == to_user)  & (cls.status == rstatus.pending)))
 
 	@classmethod
-	def follow(cls,from_user,to_user):
-		if not cls.is_from_follow_pending(to_user,from_user) or not cls.is_to_follow_pending(to_user,from_user):
+	def add_friend(cls,from_user,to_user):
+		if not cls.is_from_relationship_pending(to_user,from_user) or not cls.is_to_relationship_pending(to_user,from_user):
 			return (relationship.create(from_user = from_user,to_user = to_user, action_user = from_user))
+
 	@classmethod
 	def cancel_relationship(cls,action_user, to_user):
 		return cls.update(status = rstatus.cancel).where((cls.action_user == action_user) & (cls.to_user == to_user)).execute()
@@ -126,17 +170,23 @@ class relationship(BaseModel):
 		return cls.update(status = rstatus.delete).where((cls.action_user == action_user) & (cls.to_user == to_user)).execute()
 
 	@classmethod
-	def accept_relationship(cls,from_user, to_user):
-		return cls.update(status = rstatus.accept).where((cls.from_user == from_user) & (cls.to_user == to_user)).execute()
+	def is_related(cls,to_user,from_user):
+		return cls.select().where((cls.to_user == to_user) & (cls.from_user == from_user)  & (cls.status == rstatus.accept))
 
 	@classmethod
-	def is_related(cls,to_user,from_user):
-		return (cls.select().where((cls.to_user == to_user) & (cls.from_user == from_user)  & (cls.status == rstatus.accept)).exists())
+	def delete_relationship(cls,touser):
+		return cls.delete().where((cls.from_user == touser) | (cls.to_user == touser) & (cls.status == rstatus.accept)).execute()
+
+
+
+class RelationshipPost(BaseModel):
+	user_post = ForeignKeyField(Post, backref='rel_user', on_delete='cascade', on_update='cascade')
+	date = DateTimeField(default=dtime.now)
+
 
 db.connect()
-db.create_tables([User,LikePost,Post,relationship])
+db.create_tables([User,LikePost,Post, Comment,relationship])
 db.close()
 
-@login_manager.user_loader
-def load_user(user_id):
-	return User.get_by_id(user_id)
+
+
