@@ -2,6 +2,7 @@ from flask import Flask,g
 from .auth.views import auth as auth_bp
 import os
 import arrow
+from .auth import auth as auth_bp
 from .errors.views import error as er
 from .site.views import site as site_bp
 from .models import db,login_manager,relationship

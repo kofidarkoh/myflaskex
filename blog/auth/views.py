@@ -1,15 +1,14 @@
 from flask_login import login_user, login_required, logout_user, current_user
 from playhouse.flask_utils import get_object_or_404,object_list
-from flask import url_for,redirect,render_template,request
+from flask import url_for,redirect,render_template,request,current_app,flash
 from .authForms import LoginForm,RegisterForms, PostForm
 from blog.models import User
 from werkzeug.security import safe_join
 import os
-from .utils import GenHashPassword,CheckPassword, GenHexDigest
-from flask import Blueprint, current_app,flash
+
+from . import auth,GenHashPassword,CheckPassword, GenHexDigest
 import random
 
-auth = Blueprint('auth', __name__)
 
 @auth.route('/', methods = ["POST","GET"])
 @auth.route('/login', methods = ["POST","GET"])
