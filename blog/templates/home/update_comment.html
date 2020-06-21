@@ -1,0 +1,11 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title> update comment | {{ current_user.name }}</title>
+<div class="mt-5" style="margin: auto;width: 60%">
+    <form action="{{ url_for('site.update_comment_post',cid = comment.id, pid = comment.post.id) }}" method="POST">
+        {{ form.comment_content_update(class='form-control') }}
+        {{ form.hidden_tag() }}
+        {{ form.submit(class="btn btn-primary mt-3 mb-2")}}
+    </form>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from blog.models import User,login_manager, Post,LikePost,relationship,Comment
-from flask import render_template,url_for,redirect,request,flash
+from flask import render_template,url_for,redirect,request,flash, session
 from blog.auth.authForms import PostForm,UpdateAccountInfo,CommentForm,CommentFormUpdate,UpdatePostForm
 from blog.auth.utils import meth, GenHexDigest
 from werkzeug.security import safe_join
@@ -12,15 +12,15 @@ from flask import Blueprint, current_app,abort
 
 site = Blueprint('site', __name__)
 
-
 @site.route('/home', methods = meth)
 @login_required
 def home():
+	print(session)
 	all_post = Post.user_posts()
 	page = request.args.get('page',1,int)
 	form = PostForm()
 	if all_post:
-		return object_list('home/home.html',Post.user_posts(),relationship = relationship, page= page,paginate_by=3, context_variable='post_list',form = form)
+		return object_list('home/home.html',Post.user_posts(),relationship = relationship, page= page,paginate_by=10, context_variable='post_list',form = form)
 	return render_template('home/home.html',post_list = Post.select().where(Post.user == current_user.id),form = form)
 
 @site.route('/new_post', methods = meth)
@@ -84,16 +84,30 @@ def delete_post(pid):
 def comment_post(pid):
 	form = CommentForm()
 	Comment.create_comment(form.comment_content.data, current_user.id, pid)
-	flash('new comment <i class="fa fa-thumbs-up"></i>','success')
+	flash('new comment ','success')
 	return redirect(url_for('.view_post', pid = pid))
 
-@site.route('/update_comment/post/<int:pid>', methods = meth)
+@site.route('/update_comment/post/<int:pid>/<int:cid>', methods = meth)
 @login_required
-def update_comment_post(pid):
+def update_comment_post(pid, cid):
 	form = CommentFormUpdate()
-	Comment.update_comment(form.comment_content_update.data, pid, current_user.id)
-	flash('comment updated <i class="fa fa-thumbs-up"></i>','success')
-	return redirect(url_for('.view_post', pid = pid))
+	comment = get_or_404(Comment, Comment.id == cid)
+	if form.validate_on_submit():
+		Comment.update_comment(form.comment_content_update.data, current_user.id, pid)
+		flash('comment updated','success')
+		return redirect(url_for('view_post', pid = pid))
+	if request.method == meth[1]:
+		form.comment_content_update.data = comment.content
+	return render_template('home/update_comment.html',form = form,comment = comment)
+
+
+# @site.route('/update_comment/post/<int:pid>', methods = meth)
+# @login_required
+# def update_comment_post(pid):
+# 	form = CommentFormUpdate()
+# 	Comment.update_comment(form.comment_content_update.data, pid, current_user.id)
+# 	flash('comment updated <i class="fa fa-thumbs-up"></i>','success')
+# 	return redirect(url_for('.view_post', pid = pid))
 
 @site.route('/delete/comment/<int:cid>/<int:pid>', methods = meth)
 @login_required
@@ -105,7 +119,7 @@ def delete_comment(cid,pid):
 def save_photo(form_photo):
 	_, ext = os.path.splitext(form_photo.filename)
 	photo_name = secure_filename(GenHexDigest(random(),random())) + ext
-	photo_path = safe_join(current_app.root_path +'/static/photos/' + current_user.photo, photo_name)
+	photo_path = os.path.join(current_app.root_path +'/static/photos/' + current_user.username, photo_name)
 	form_photo.save(photo_path)
 	return photo_name
 
@@ -117,7 +131,8 @@ def account(username):
 		user = User.update(name = form.name.data,email = form.email.data,username = form.username.data).where(User.id == current_user.id)
 		if form.photo.data:
 			photoname = save_photo(form.photo.data)
-			User.update(photo = '/'+ current_user.photo +'/' +photoname).where(User.id == current_user.id).execute()
+			User.update(photo = photoname).where(User.id == current_user.id).execute()
+		os.rename(os.path.join(current_app.root_path +'/static/photos/' , current_user.username), os.path.join(current_app.root_path +'/static/photos',form.username.data))
 		user.execute()
 		flash('Account updated','success')
 		return redirect(url_for('.account', username = username))

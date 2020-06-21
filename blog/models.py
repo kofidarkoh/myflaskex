@@ -35,7 +35,6 @@ class User(BaseModel,UserMixin):
 	username = CharField(unique = True)
 	password = CharField()
 	lastseen = CharField(default=dtime.now())
-	dphoto = CharField(default='photo.jpg')
 	photo = CharField(default='photo.jpg')
 	joined = DateTimeField(default=dtime.now)
 

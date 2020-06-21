@@ -13,7 +13,7 @@
                             <form action="{{ url_for('site.new_post') }}" class="form-group" method="POST">
                                 {{ form.hidden_tag() }}
                                 <div class=" mt-2 mb-2">
-                                    {{ form.post_content(class="form-control", row = 10)}}
+                                    {{ form.post_content(class="form-control")}}
                                 </div>
                                 <div class="mt-2">
                                     {{ form.submit(class="btn btn-block btn-primary")}}
@@ -24,12 +24,12 @@
                 </div>
             </div>
             <div>
-                <div class="row">
+                <div class="row mt-5">
                     {% for post in post_list %}
                     <div class="col-xs-2 col-md-3">
                         <div class="thumbnail mt-3" style="width: 250px;">
-                            {% if post.user.photo.endswith('.jpg') %}
-                            <img src="{{ url_for('static',filename= 'photos/'+post.user.photo) }}" class="img-thumbnail" alt="..." style="width: 120px">
+                            {% if post.user.photo %}
+                            <img src="{{ url_for('static',filename= 'photos/'+  post.user.username +'/'+post.user.photo) }}" class="img-thumbnail" alt="..." style="width: 120px">
                             {% endif %}
                             <h4 class="text-center mt-3"><a href="">{{ post.user.name }}</a></h4>
                             <div class="text-center">

@@ -5,11 +5,11 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-                <h3>You have <span class="badge badge-primary mt-3 mb-3">{{ rela.pending_relationship_request(current_user.id).count() }}</span> follow request</h3>
+                <h3>You have <span class="badge badge-primary mt-3 mb-3">{{ current_user.id | count_pending_request }}</span> follow request</h3>
                 {% for user in rela.pending_relationship_request(current_user.id ) %}
                 <div class="col-3 col-sm-5">
                     <div class="thumbnail" style="width: 210px;">
-                        <img src="{{ url_for('static',filename= 'photos/'+ user.from_user.photo) }}" class="" alt="...">
+                        <img src="{{ url_for('static',filename= 'photos/'+  user.from_user.username +'/'+ user.from_user.photo) }}" class="" alt="...">
                         <div class="caption">
                             <h3 class="text-center"><a href="">{{ user.from_user.name }}</a></h3>
                             <a href="{{ url_for('site.confirm_friend', usid = user.id) }}" class="btn btn-primary btn-block " role="button">Accept</a>
@@ -28,7 +28,7 @@
                 {% if rela.is_to_relationship_pending(user.id, current_user.id ) %}
                 <div class="col-3 col-sm-5">
                     <div class="thumbnail" style="width: 210px;">
-                        <img src="{{ url_for('static',filename= 'photos/' + user.photo) }}" class="" alt="...">
+                        <img src="{{ url_for('static',filename= 'photos/' + user.username +'/'+ user.photo) }}" class="" alt="...">
                         <div class="caption">
                             <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
                             <p class="text-center"><a href="{{ url_for('site.cancel_friend', usid = user.id) }}" class="btn btn-danger btn-block" role="button">cancel</a></p>
@@ -38,7 +38,7 @@
                 {% elif rela.is_from_relationship_pending(current_user.id,user.id ) %}
                 <div class="col-3 col-sm-5">
                     <div class="thumbnail" style="width: 210px;">
-                        <img src="{{ url_for('static',filename= 'photos/'+ user.photo) }}" class="" alt="...">
+                        <img src="{{ url_for('static',filename= 'photos/'+  user.username +'/'+ user.photo) }}" class="" alt="...">
                         <div class="caption">
                             <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
                             <p class="text-center"><a href="{{ url_for('site.delete_friend', usid = user.id) }}" class="btn btn-danger btn-block" role="button">delete</a></p>
@@ -48,17 +48,19 @@
                 {% elif rela.is_related(user.id, current_user.id) %}
                 <div class="col-3 col-sm-5">
                     <div class="thumbnail" style="width: 210px;">
-                        <img src="{{ url_for('static',filename= 'photos/'+ user.photo) }}" class="" alt="...">
+                        <img src="{{ url_for('static',filename= 'photos/'+ current_user.username +'/'+ user.photo) }}" class="" alt="...">
                         <div class="caption">
                             <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
-                            <p class="text-center"><a href="{{ url_for('site.unfriend',usid = user.id) }}" class="btn btn-danger btn-block" role="button">unfriend</a></p>
+                            <p class="text-center">
+                                <a href="{{ url_for('site.unfriend',usid = user.id) }}" class="btn btn-danger btn-block" role="button">unfriend</a>
+                            </p>
                         </div>
                     </div>
                 </div>
                 {% elif rela.is_related(current_user.id, user.id) %}
                 <div class="col-3 col-sm-5">
                     <div class="thumbnail" style="width: 210px;">
-                        <img src="{{ url_for('static',filename= 'photos/' + user.photo) }}" class="" alt="...">
+                        <img src="{{ url_for('static',filename= 'photos/'+  user.username +'/'+ user.photo) }}" class="" alt="...">
                         <div class="caption">
                             <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
                             <p class="text-center"><a href="{{ url_for('site.unfriend', usid = user.id) }}" class="btn btn-danger btn-block" role="button">unfriend</a></p>
@@ -68,7 +70,7 @@
                 {% else %}
                 <div class="col-3 col-sm-5">
                     <div class="thumbnail" style="width: 210px;">
-                        <img src="{{ url_for('static',filename= 'photos/' + user.photo) }}" class="" alt="...">
+                        <img src="{{ url_for('static',filename= 'photos/' +  user.username +'/'+ user.photo) }}" class="" alt="...">
                         <div class="caption">
                             <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
                             <p class="text-center"><a href="{{ url_for('site.add_friend', usid = user.id) }}" class="btn btn-primary btn-block" role="button"><i class="fa fa-plus"></i> add friend</a></p>
