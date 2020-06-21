@@ -2,7 +2,7 @@ from peewee import *
 from flask_login import UserMixin,LoginManager, current_user
 from playhouse.sqliteq import SqliteQueueDatabase # peewee extra lib playhouse
 import arrow # time and date 
-from .auth.utils import Relationship_status as rstatus
+from  .auth.utils import Relationship_status as rstatus
 from datetime import datetime as dtime
 import os 
 from flask import abort
