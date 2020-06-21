@@ -2,7 +2,7 @@ from peewee import *
 from flask_login import UserMixin,LoginManager, current_user
 from playhouse.sqliteq import SqliteQueueDatabase # peewee extra lib playhouse
 import arrow # time and date 
-from  .auth.utils import Relationship_status as rstatus
+from .auth.utils import Relationship_status as rstatus
 from datetime import datetime as dtime
 import os 
 from flask import abort
@@ -73,6 +73,7 @@ class Post(BaseModel):
 		if result:
 			return result
 		return Post.select().where(Post.user == current_user.id)
+
 
 
 	@classmethod
@@ -181,11 +182,6 @@ class relationship(BaseModel):
 class RelationshipPost(BaseModel):
 	user_post = ForeignKeyField(Post, backref='rel_user', on_delete='cascade', on_update='cascade')
 	date = DateTimeField(default=dtime.now)
-
-
-db.connect()
-db.create_tables([User,LikePost,Post, Comment,relationship])
-db.close()
 
 
 
