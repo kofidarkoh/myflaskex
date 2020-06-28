@@ -2,12 +2,6 @@ from hashlib import sha256,md5,sha1
 from random import random
 meth = ["POST",'GET']
 
-class Relationship_status:
-	pending = 0
-	accept = 1
-	ignore = 2
-	cancel = 3
-	delete = 4
 
 
 def GenHexDigest(salt , raw_password , algorithm_type = md5):

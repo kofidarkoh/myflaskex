@@ -1,0 +1,47 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title> People | {{ current_user.name }}</title>
+<div class="container">
+    <h3 class="mt-3 text-center mb-3">Messages</h3>
+    {% for user_msg in message_list %}
+    {% if user_msg.from_user.id == current_user.id %}
+    <div class="media list-group-item mt-5" style="margin: auto;width: 50%">
+        <div class="media-left">
+            <a href="#">
+                <img src="{{ url_for('static',filename= 'photos/'+ user_msg.to_user.username +'/'+ user_msg.from_user.photo) }}" class=" media-object img-rounded" alt="..." height="50" width="50">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading ml-5 mb-3"><a href="">{{ user_msg.to_user.name }}</a></h4>
+           <a href="{{ url_for('site.message', mid = user_msg.id) }}"><article class="ml-5 mb-1" style="font-size: 16px; white-space: pre-line;">{{ user_msg.content | safe }}
+            </article></a>
+            {% if user_msg.read == 1 %}
+            <p class="pull-right text-primary"><i class="ml-5 fa fa-check-circle "></i> read</p>
+            {% else %}
+             <p class="pull-right"><i class="ml-5 fa fa-check-circle "></i> sent </p>
+             {% endif %}
+            <p class="text-muted ml-5"> {{ user_msg.date | dtime }} </p>
+        </div>
+    </div>
+    {% endif %}
+    {% if user_msg.to_user.id == current_user.id  and user_msg.status == 0 %}
+    <div class="media list-group-item mt-5" style="margin: auto;width: 50%">
+        <div class="media-left">
+            <a href="#">
+                <img src="{{ url_for('static',filename= 'photos/'+ user_msg.from_user.username +'/'+ user_msg.from_user.photo) }}" class=" media-object img-rounded" alt="..." height="50" width="50">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading ml-5 mb-3"><a href="">{{ user_msg.from_user.name }}</a></h4>
+            <p class="pull-right"><span class="badge badge-primary ">new</span></p>
+            <a href=""><article class="ml-5 mb-1" style="font-size: 16px; white-space: pre-line;">{{ user_msg.content | safe }}
+            </article></a>
+            <p class="text-muted ml-5"> {{ user_msg.date | dtime }} </p>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}

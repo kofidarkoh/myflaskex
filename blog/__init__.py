@@ -4,7 +4,7 @@ import os
 import arrow
 from .errors.views import error as er
 from .site.views import site as site_bp
-from .models import db,login_manager,relationship,Post, LikePost, User, Comment
+from .models import db,login_manager,relationship,Post, LikePost, User, Comment,messages
 from urllib.parse import quote_plus
 from markupsafe import Markup
 
@@ -38,31 +38,29 @@ app.register_blueprint(er)
 
 # db.connect()
 
-db.create_tables([User,LikePost,Post, Comment,relationship])
+# db.create_tables([User,LikePost,Post, Comment,relationship])
 
-# db.close()
-@app.before_request
-def before_request():
-    g.db = db
-    g.db.connect()
+# # db.close()
+# @app.before_request
+# def before_request():
+#     g.db = db
+#     g.db.connect()
 
-@app.after_request
-def after_request(response):
-    g.db.close()
-    return response
-@app.template_filter('urlencode')
-def urlencode_filter(s):
-    if type(s) == 'Markup':
-        s = s.unescape()
-    if type(s) == int:
-    	s = str(s)
-    s = s.encode('utf8')
-    s = quote_plus(s)
-    return Markup(s)
+# @app.after_request
+# def after_request(response):
+#     g.db.close()
+#     return response
+@app.template_filter('html')
+def html_filter(text):
+    return Markup(text)
 
 @app.template_filter('count_pending_request')
 def count_pending_request_filter(userid):
 	return relationship.pending_relationship_request(userid).count()
+
+@app.template_filter('count_new_messsage')
+def count_new_messsage_filter(n):
+	return messages.new_message().count()
 
 @app.template_filter('dtime')
 def dtime_filter(date):

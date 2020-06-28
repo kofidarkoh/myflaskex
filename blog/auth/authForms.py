@@ -66,3 +66,11 @@ class UpdateAccountInfo(FlaskForm):
 			user = User.select().where(User.username == field.data)
 			if user:
 				raise ValidationError('Username exist try another username')
+
+class MessageForm(FlaskForm):
+	content = TextAreaField(validators=[InputRequired()])
+	submit = SubmitField('send')
+
+class ReplyMessageForm(FlaskForm):
+	content = TextAreaField(validators=[InputRequired()])
+	submit = SubmitField('send')

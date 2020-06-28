@@ -1,0 +1,95 @@
+{% extends 'includes/base.html' %}
+{% block body %}
+<title> Friends | {{ current_user.name }}</title>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                {% for user in object_list %}
+                {% if rela.is_related(user.id, current_user.id) %}
+                <div class="col-3 col-sm-5">
+                    <div class="thumbnail" style="width: 210px;">
+                        <img src="{{ url_for('static',filename= 'photos/'+  user.username +'/'+ user.photo) }}" class="" alt="...">
+                        <div class="caption">
+                            <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
+                            <p class="text-center">
+                                <a type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal">
+                                send message
+                            </a>
+                            <a hreaf="{{ url_for('site.unfriend', usid = user.id) }}" class="btn btn-danger btn-block" role="button">unfriend</a></p>
+                        </div>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Send message </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group ">
+                                            <form action="{{ url_for('site.send_message', usid = user.id) }}" class="form-group" method="POST">
+                                            {{ form.hidden_tag() }}
+                                                <div class=" mt-2 mb-2">
+                                                  {{ form.content(class='form-control') }}
+                                                </div>
+                                                <div class="mt-2">
+                                                  {{ form.submit(class='btn btn-primary') }}
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if rela.is_related(current_user.id, user.id) %}
+                <div class="col-3 col-sm-5">
+                    <div class="thumbnail" style="width: 210px;">
+                        <img src="{{ url_for('static',filename= 'photos/'+  user.username +'/'+ user.photo) }}" class="" alt="...">
+                        <div class="caption">
+                            <h3 class="text-center"><a href="">{{ user.name }}</a></h3>
+                            <p class="text-center">
+                                <a type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal">
+                                send message
+                            </a>
+                            <a hreaf="{{ url_for('site.unfriend', usid = user.id) }}" class="btn btn-danger btn-block" role="button">unfriend</a></p>
+                        </div>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Send message </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group ">
+                                            <form action="{{ url_for('site.send_message', usid = user.id) }}" class="form-group" method="POST">
+                                            {{ form.hidden_tag() }}
+                                                <div class=" mt-2 mb-2">
+                                                  {{ form.content(class='form-control') }}
+                                                </div>
+                                                <div class="mt-2">
+                                                  {{ form.submit(class='btn btn-primary') }}
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}

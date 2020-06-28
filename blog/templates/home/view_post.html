@@ -1,6 +1,6 @@
 {% extends 'includes/base.html' %}
 {% block body %}
-<title> View post | {{ post.content | safe | truncate(50) }}</title>
+<title> View post </title>
 <div class="container-fluid">
     <div class="" id="nav-tabContent">
         <div class="" id="nav-home" style="margin: auto;width: 60%">
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         {% endif %}
-                        <article class="mt-5" style="white-space: pre-line;font-size: 18px">{{ post.content | safe }}</article>
+                        <article class="mt-5" style="white-space: pre-line;font-size: 18px">{{ post.content | html }}</article>
                     </div>
                 </div>
                 <div class="mt-5">

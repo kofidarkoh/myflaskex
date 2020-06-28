@@ -1,4 +1,4 @@
-from blog.models import User,login_manager, Post,LikePost,relationship,Comment
+from blog.models import User,login_manager, Post,LikePost,relationship,Comment, accept_relationship
 from flask import render_template,url_for,redirect,request,flash, session
 from blog.auth.authForms import PostForm,UpdateAccountInfo,CommentForm,CommentFormUpdate,UpdatePostForm
 from blog.auth.utils import meth, GenHexDigest
@@ -161,10 +161,10 @@ def cancel_friend(usid):
 	flash('<strong> request canceled </strong>','success')
 	return redirect(url_for('.people'))
 
-@site.route('/confirm_friend_request/user/<int:usid>', methods = meth)
+@site.route('/confirm_friend_request/user/<int:usid>')
 @login_required
 def confirm_friend(usid):
-	current_user.accept_relationship(usid)
+	accept_relationship(usid)
 	flash('<strong>confirmed</strong>','success')
 	return redirect(url_for('.people'))
 

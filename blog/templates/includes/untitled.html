@@ -52,3 +52,17 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> -->
+
+
+<div class="media mt-5">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{ url_for('static',filename= 'photos/'+ user_msg.from_user.username +'/'+ user_msg.from_user.photo) }}" class=" media-object img-rounded" alt="..." height="50" width="50">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading ml-5 mb-3"><a href="">{{ user_msg.from_user.name }}</a></h4>
+                    <article class="ml-5 mb-3" style="font-size: 16px; white-space: pre-line;">{{ user_msg.content | safe }}</article>
+                    <p class="text-muted ml-5"> {{ user_msg.date | dtime }} </p>
+                </div>
+            </div>
