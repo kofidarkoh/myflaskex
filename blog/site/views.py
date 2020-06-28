@@ -1,4 +1,4 @@
-from blog.models import User,login_manager, Post,LikePost,relationship,Comment, accept_relationship
+from blog.models import User,login_manager, Post,LikePost,relationship,Comment
 from flask import render_template,url_for,redirect,request,flash, session
 from blog.auth.authForms import PostForm,UpdateAccountInfo,CommentForm,CommentFormUpdate,UpdatePostForm
 from blog.auth.utils import meth, GenHexDigest
