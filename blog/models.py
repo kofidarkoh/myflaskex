@@ -19,8 +19,12 @@ db = SqliteDatabase(db_path, pragmas={'foreign_keys': 1, 'cache_size': 1024, 'jo
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get_by_id(user_id)
-
+    try:
+        user = User.get_by_id(user_id)
+        return user
+    except DoesNotExist:
+        pass
+    return None
 
 class BaseModel(Model):
 
