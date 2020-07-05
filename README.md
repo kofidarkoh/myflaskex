@@ -38,13 +38,15 @@ deactivate the ```virtual environment``` for all OS
 ## Technologies
 + HTML
 + CSS
+  + [Bootstrap 3](https://getbootstrap.com/docs/3.3/) 
+
 + JavaScript
 + Python
-    + flask
-    + flask-login
-    + flask-wtf
-    + peewee
-    + arrow
+  + flask
+  + flask-login
+  + flask-wtf
+  + peewee
+  + arrow
 
 ## Notes
 Star the project to view latest changes
